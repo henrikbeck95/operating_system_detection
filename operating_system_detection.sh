@@ -46,6 +46,14 @@ function check_if_this_script_is_running_inside_docker_container_or_not(){
     fi
 }
 
+function checking_processor_arch(){
+    case $PROCESSOR_ARCH in
+        x86_64) PROCESSOR_ARCH_BITS=64 ;;
+        i*86) PROCESSOR_ARCH_BITS=32 ;;
+        *) PROCESSOR_ARCH_BITS="Undefined" ;;
+    esac
+}
+
 function checking_linux_operating_system_using_command_awk(){
     #local SEARCH_FILE="/usr/lib/os-release"
     local SEARCH_FILE="/etc/*-release"
@@ -86,6 +94,7 @@ function checking_linux_operating_system_using_command_awk_unknown(){
     esac
 }
 
+#Unused function. Maybe someday in case of some problem
 function checking_linux_operating_system_using_command_which(){
     if command -v dnf &> /dev/null || command -v yum &> /dev/null; then
         OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_REDHAT
@@ -100,11 +109,23 @@ function checking_linux_operating_system_using_command_which(){
     fi
 }
 
-function checking_processor_arch(){
-    case $PROCESSOR_ARCH in
-        x86_64) PROCESSOR_ARCH_BITS=64 ;;
-        i*86) PROCESSOR_ARCH_BITS=32 ;;
-        *) PROCESSOR_ARCH_BITS="Undefined" ;;
+#This function is only be called if there is no "ID_LIKE" on /etc/*-release files.
+function checking_linux_operating_system_using_command_grep(){
+    OPERATING_SYSTEM_NAME=$(cat /etc/*-release | grep "^NAME=" | cut -d '=' -f 2)
+    OPERATING_SYSTEM_VERSION=$(cat /etc/*-release | grep "^ID=" | cut -d '=' -f 2)
+    #OPERATING_SYSTEM_BASED=$(cat /etc/*-release | grep "^ID_LIKE=" | cut -d '=' -f 2)
+    #OPERATING_SYSTEM_BASED="This is an original Linux distro!"
+    OPERATING_SYSTEM_BASED="$OPERATING_SYSTEM_NAME"
+
+    #Checking Linux distro
+    case $OPERATING_SYSTEM_NAME in
+        "alpine") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_ALPINE ;;
+        "arch") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_ARCH ;;
+        "rhel fedora" | "fedora" | "centos" | "rhel") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_REDHAT ;;
+        "ubuntu" | "debian") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_DEBIAN ;;
+        "suse") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_OPENSUSE ;;
+        "Slackware") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_SLACKWARE ;;
+        *) checking_linux_operating_system_using_command_awk_unknown ;;
     esac
 }
 
@@ -117,8 +138,8 @@ function print_all(){
 #############################
 
 #Files to be checked
-FILE_SYSTEM_MACOS="/usr/libexec/PlistBuddy"
 FILE_SYSTEM_LINUX="/etc/os-release"
+FILE_SYSTEM_MACOS="/usr/libexec/PlistBuddy"
 
 checking_processor_arch
 
@@ -127,8 +148,15 @@ if [[ -f $FILE_SYSTEM_LINUX ]]; then
     INTRODUCTION_MESSENGE="Excellent!!! You are a Linux user \o/"
 
     check_if_this_script_is_running_inside_docker_container_or_not
-    checking_linux_operating_system_using_command_awk
-    #checking_linux_operating_system_using_command_which
+
+    if grep -q "^ID_LIKE=" /etc/*-release; then
+        echo "Found: ID_LIKE on /etc/*-release"
+        checking_linux_operating_system_using_command_awk
+        #checking_linux_operating_system_using_command_which
+    else
+        echo "Not found: ID_LIKE on /etc/*-release"
+        checking_linux_operating_system_using_command_grep
+    fi
 elif [[ -f $FILE_SYSTEM_MACOS ]]; then
     INTRODUCTION_MESSENGE="Good! You are a MacOS USER"
     
@@ -151,7 +179,8 @@ esac
 
 #Script paramenters threatments control to display all the variables or not.
 case $AUX1 in
-    "" | "-p" | "--print") print_all ;;
+    "") echo "Inform a parameter to display a variable container" ;;
+    "-p" | "--print") print_all ;;
     "-a" | "--arch") echo "$PROCESSOR_ARCH" ;;
     "-ab" | "--arch-bits") echo "$PROCESSOR_ARCH_BITS" ;;
     "-d" | "--docker") echo "$IS_RUNNING_INSIDE_DOCKER" ;;

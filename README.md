@@ -91,14 +91,58 @@ I am sure you have also identified yourself with some (or all) these words above
 
 1. If you are developing using any other language besides the `Shell script` be sure the following steps might not work rightly unless you search about how to use `bash` commands on the programming language you want by yourself.
 
-## Implement this file on your own project
+## Usage
 
+### Implement this file on your own project
+
+- Download the shell script file
+    - Method 1
+        > $ `curl https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh --output build.sh`
+    
+    - Method 2
+        > $ `wget https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh -O build.sh`
+
+    - Method Error
+        - In case of `ERROR: cannot verify raw.githubusercontent.com's certificate, issued by 'CN=DigiCert SHA2 High Assurance Server CA,OU=www.digicert.com,O=DigiCert Inc,C=US': Unable to locally verify the issuer's authority. To connect to raw.githubusercontent.com insecurely, use `--no-check-certificate'.` try:
+
+            > $ `wget https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh --no-check-certificate -O build.sh`
+    
+    - Fastest mode (only recommended for running inside a Docker container)
+        > $ `clear && rm -fr ./build.sh /operating_system_detection/ && wget https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh --no-check-certificate -O build.sh && ls && chmod +x ./build.sh && ./build.sh && ./operating_system_detection/operating_system_detection.sh --print`
+
+- Give executable permission
+    > $ `chmod +x ./build.sh`
+
+- Build the API
+    > $ `./build.sh`
+
+- Run the API
+    > $ `./operating_system_detection/operating_system_detection.sh` or $ `./operating_system_detection/operating_system_detection.sh --print`
+
+### Check a specific information
+
+- Download the shell script file
+    > $ `curl https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh --output build.sh`
+
+- Give executable permission
+    > $ `chmod +x ./build.sh`
+
+- Build the API
+    > $ `./build.sh`
+
+- Load the API
+    > $ `source ./operating_system_detection/operating_system_detection.sh`
+
+- Display the information (example)
+    > $ `echo $PROCESSOR_ARCH_BITS`
+
+<!--
 ### Online verification method
 
 This method seems to be a good way to use the newest updated version from this script to your project. Once you have followed the right steps to implement this script on your project it is going to download the most recent version file avaliable on the offical repository and it is also going to erase the old version file download before.
 
 - Requirements
-    1. Be sure [Wget](https://github.com/jay/wget) or [cURL](https://github.com/curl/curl) sorftware are already installed on the user's operating system. Do not worry almost every Linux distro or MacOS X already has installed at least one of these softwares by default.
+    - Be sure [Wget](https://github.com/jay/wget) or [cURL](https://github.com/curl/curl) sorftware are already installed on the user's operating system. Do not worry almost every Linux distro or MacOS X already has installed at least one of these softwares by default.
     
 - Source code
 
@@ -113,27 +157,42 @@ This method seems to be a better way for those whom wants more stability once th
 
 ```bash
 ```
+-->
 
 ## Support this project
 
 Help this project to stay alive improving the source code. Implement possible bugs fixes or new functions.
 
-- Features
-    - [x] Processor architecture detection
-    - [x] Processor architecture bits detection
+## Features
+
+- Operating system information detection
     - [x] Operating system basement detection
     - [x] Operating system name detection
     - [x] Operating system version detection
-    - [x] Alpine operating system detection
-    - [x] ArchLinux operating system detection
-    - [x] Debian operating system detection
-    - [x] OpenSUSE operating system detection
-    - [x] RedHat operating system detection
-    - [x] Slackware operating system detection
-    - [ ] Android operating system detection
-    - [ ] FreeBSD operating system detection
-    - [ ] Gentoo operating system detection
-    - [ ] Windows operating system detection
-    - [ ] Windows subsystem (WSL) detection
+
+- Processor architecture
+    - [x] Processor architecture detection
+    - [x] Processor architecture bits detection
+
+- Container
     - [x] Docker detection
     - [ ] Kubernates detection
+
+- Operating system detection
+    - [ ] Alpine <!--Not working correctly yet-->
+    - [ ] Android
+    - [x] ArchLinux
+    - [x] Debian
+    - [ ] FreeBSD <!--Not implemented yet-->
+    - [ ] Gentoo <!--Not implemented yet-->
+    - [ ] MacOS X <!--Not tested yet-->
+    - [ ] OpenSUSE <!--Not tested yet-->
+    - [ ] RedHat <!--Not tested yet-->
+    - [x] Slackware <!--Not tested yet-->
+
+- Windows subsystem (WSL) detection
+    - [ ] Alpine <!--Not tested yet-->
+    - [ ] Debian <!--Not tested yet-->
+    - [ ] Kali Linux <!--Not tested yet-->
+    - [ ] OpenSUSE <!--Not tested yet-->
+    - [x] Ubuntu
