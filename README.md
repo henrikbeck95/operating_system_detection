@@ -176,19 +176,22 @@ Help this project to stay alive improving the source code. Implement possible bu
 
 - Container
     - [x] Docker detection
-    - [ ] Kubernates detection
+    - [ ] Podman detection <!--Not tested yet-->
+    - [ ] Kubernates detection <!--Not tested yet-->
 
 - Operating system detection
-    - [ ] Alpine <!--Not working correctly yet-->
+    - [x] Alpine
     - [ ] Android
     - [x] ArchLinux
     - [x] Debian
+    - [ ] Fedora <!--Not tested yet-->
     - [ ] FreeBSD <!--Not implemented yet-->
     - [ ] Gentoo <!--Not implemented yet-->
     - [ ] MacOS X <!--Not tested yet-->
     - [ ] OpenSUSE <!--Not tested yet-->
     - [ ] RedHat <!--Not tested yet-->
-    - [x] Slackware <!--Not tested yet-->
+    - [x] Slackware
+    - [x] Ubuntu
 
 - Windows subsystem (WSL) detection
     - [ ] Alpine <!--Not tested yet-->

@@ -77,6 +77,26 @@ function checking_linux_operating_system_using_command_awk(){
     esac
 }
 
+#This function is only be called if there is no "ID_LIKE" on /etc/*-release files.
+function checking_linux_operating_system_using_command_grep(){
+    OPERATING_SYSTEM_NAME=$(cat /etc/*-release | grep "^NAME=" | cut -d '=' -f 2)
+    OPERATING_SYSTEM_VERSION=$(cat /etc/*-release | grep "^ID=" | cut -d '=' -f 2)
+    #OPERATING_SYSTEM_BASED=$(cat /etc/*-release | grep "^ID_LIKE=" | cut -d '=' -f 2)
+    #OPERATING_SYSTEM_BASED="This is an original Linux distro!"
+    OPERATING_SYSTEM_BASED="$OPERATING_SYSTEM_NAME"
+
+    #case $OPERATING_SYSTEM_BASED in
+    case $OPERATING_SYSTEM_NAME in
+        "\"Alpine Linux\"" | "alpine") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_ALPINE ;;
+        "arch") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_ARCH ;;
+        "rhel fedora" | "fedora" | "centos" | "rhel") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_REDHAT ;;
+        "ubuntu" | "debian") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_DEBIAN ;;
+        "suse") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_OPENSUSE ;;
+        "Slackware") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_SLACKWARE ;;
+        *) checking_linux_operating_system_using_command_awk_unknown ;;
+    esac
+}
+
 function checking_linux_operating_system_using_command_awk_unknown(){
     local SEARCH_FILE="/etc/os-release"
 
@@ -94,43 +114,8 @@ function checking_linux_operating_system_using_command_awk_unknown(){
     esac
 }
 
-#Unused function. Maybe someday in case of some problem
-function checking_linux_operating_system_using_command_which(){
-    if command -v dnf &> /dev/null || command -v yum &> /dev/null; then
-        OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_REDHAT
-    elif command -v apt &> /dev/null; then
-        OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_DEBIAN
-    elif command -v apk &> /dev/null; then
-        OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_ALPINE
-    elif command -v pacman &> /dev/null; then
-        OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_ARCH
-    else
-        OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_UNKNOWN
-    fi
-}
-
-#This function is only be called if there is no "ID_LIKE" on /etc/*-release files.
-function checking_linux_operating_system_using_command_grep(){
-    OPERATING_SYSTEM_NAME=$(cat /etc/*-release | grep "^NAME=" | cut -d '=' -f 2)
-    OPERATING_SYSTEM_VERSION=$(cat /etc/*-release | grep "^ID=" | cut -d '=' -f 2)
-    #OPERATING_SYSTEM_BASED=$(cat /etc/*-release | grep "^ID_LIKE=" | cut -d '=' -f 2)
-    #OPERATING_SYSTEM_BASED="This is an original Linux distro!"
-    OPERATING_SYSTEM_BASED="$OPERATING_SYSTEM_NAME"
-
-    #Checking Linux distro
-    case $OPERATING_SYSTEM_NAME in
-        "alpine") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_ALPINE ;;
-        "arch") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_ARCH ;;
-        "rhel fedora" | "fedora" | "centos" | "rhel") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_REDHAT ;;
-        "ubuntu" | "debian") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_DEBIAN ;;
-        "suse") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_OPENSUSE ;;
-        "Slackware") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_SLACKWARE ;;
-        *) checking_linux_operating_system_using_command_awk_unknown ;;
-    esac
-}
-
 function print_all(){
-    echo -e "$INTRODUCTION_MESSENGE\n\nWhere is this script running? $IS_RUNNING_INSIDE_DOCKER_MESSENGE\nYour processor arch is: $PROCESSOR_ARCH\nYour processor arch bits is: $PROCESSOR_ARCH_BITS\nYour oprating system is based on: $OPERATING_SYSTEM_BASED\nYour oprating system name is: $OPERATING_SYSTEM_NAME\nYour oprating system version is: $OPERATING_SYSTEM_VERSION"
+    echo -e "$INTRODUCTION_MESSENGE\n\nWhere is this script running? $IS_RUNNING_INSIDE_DOCKER_MESSENGE\nYour processor arch is: $PROCESSOR_ARCH\nYour processor arch bits is: $PROCESSOR_ARCH_BITS\nYour operating system is based on: $OPERATING_SYSTEM_BASED\nYour operating system name is: $OPERATING_SYSTEM_NAME\nYour operating system version is: $OPERATING_SYSTEM_VERSION"
 }
 
 #############################
@@ -152,7 +137,6 @@ if [[ -f $FILE_SYSTEM_LINUX ]]; then
     if grep -q "^ID_LIKE=" /etc/*-release; then
         echo "Found: ID_LIKE on /etc/*-release"
         checking_linux_operating_system_using_command_awk
-        #checking_linux_operating_system_using_command_which
     else
         echo "Not found: ID_LIKE on /etc/*-release"
         checking_linux_operating_system_using_command_grep
