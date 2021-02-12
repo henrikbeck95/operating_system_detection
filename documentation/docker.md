@@ -52,7 +52,6 @@ Once you are inside the Docker container, copy and past the commands to get the 
     ```
 -->
 
-<!--
 ### Fedora
 
 1. Create and get inside the Fedora container
@@ -61,19 +60,15 @@ Once you are inside the Docker container, copy and past the commands to get the 
 1. Commands
 
     ```bash
-    #Update the system and install cURL
-    yum update && yum install curl
+    #Update the system
+    dnf update
 
-    #Create the folder and get in there
-    mkdir /tests/ && cd /tests/
+    #Install Wget
+    dnf install wget
 
-    #Download the shell script file
-    curl https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh --output build.sh
-
-    #Give executable permission and run it 
-    chmod +x /tests/build.sh && /tests/build.sh && /tests/operating_system_detection/operating_system_detection.sh
+    #Run the fastest mode
+    clear && rm -fr ./build.sh /operating_system_detection/ && wget https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh --no-check-certificate -O build.sh && ls && chmod +x ./build.sh && ./build.sh && ./operating_system_detection/operating_system_detection.sh --print    
     ```
--->
 
 ### Slackware
 

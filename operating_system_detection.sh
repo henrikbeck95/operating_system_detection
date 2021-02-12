@@ -88,11 +88,11 @@ function checking_linux_operating_system_using_command_grep(){
     #case $OPERATING_SYSTEM_BASED in
     case $OPERATING_SYSTEM_NAME in
         "\"Alpine Linux\"" | "alpine") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_ALPINE ;;
-        "arch") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_ARCH ;;
-        "rhel fedora" | "fedora" | "centos" | "rhel") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_REDHAT ;;
-        "ubuntu" | "debian") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_DEBIAN ;;
-        "suse") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_OPENSUSE ;;
-        "Slackware") OPERATING_SYSTEM_NAME=$OPERATING_SYSTEM_BASEMENT_SLACKWARE ;;
+        "arch") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_ARCH ;;
+        "rhel fedora" | "fedora" | "Fedora" | "centos" | "rhel") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_REDHAT ;;
+        "ubuntu" | "debian") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_DEBIAN ;;
+        "suse") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_OPENSUSE ;;
+        "Slackware") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_SLACKWARE ;;
         *) checking_linux_operating_system_using_command_awk_unknown ;;
     esac
 }
