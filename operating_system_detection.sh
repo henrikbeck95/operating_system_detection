@@ -8,6 +8,8 @@
 OPERATING_SYSTEM_BASEMENT_ALPINE="Alpine"
 OPERATING_SYSTEM_BASEMENT_ARCH="ArchLinux"
 OPERATING_SYSTEM_BASEMENT_DEBIAN="Debian"
+OPERATING_SYSTEM_BASEMENT_GENTOO="Gentoo"
+OPERATING_SYSTEM_BASEMENT_MAGEIA="Mandriva"
 OPERATING_SYSTEM_BASEMENT_OPENSUSE="OpenSUSE"
 OPERATING_SYSTEM_BASEMENT_REDHAT="RedHat"
 OPERATING_SYSTEM_BASEMENT_SLACKWARE="Slackware"
@@ -16,7 +18,6 @@ OPERATING_SYSTEM_BASEMENT_UNKNOWN="Unknown"
 #Operating systems for general purpose not implemented yet
 # OPERATING_SYSTEM_BASEMENT_ANDROID="Android"
 # OPERATING_SYSTEM_BASEMENT_FREEBSD="FreeBSD"
-# OPERATING_SYSTEM_BASEMENT_GENTOO="Gentoo"
 # OPERATING_SYSTEM_BASEMENT_MACOS="MacOS"
 # OPERATING_SYSTEM_BASEMENT_WINDOWS="WSL"
 
@@ -71,6 +72,7 @@ function checking_linux_operating_system_using_command_awk(){
     case $OPERATING_SYSTEM_BASED in
         "arch") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_ARCH ;;
         "rhel fedora" | "fedora" | "centos" | "rhel") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_REDHAT ;;
+        "mageia" | "Mageia" | "mandriva fedora" | "\"mandriva fedora\"") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_MAGEIA ;;
         "ubuntu" | "debian") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_DEBIAN ;;
         "suse") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_OPENSUSE ;;
         *) checking_linux_operating_system_using_command_awk_unknown ;;
@@ -91,6 +93,7 @@ function checking_linux_operating_system_using_command_grep(){
         "arch") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_ARCH ;;
         "rhel fedora" | "fedora" | "Fedora" | "centos" | "rhel") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_REDHAT ;;
         "ubuntu" | "debian") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_DEBIAN ;;
+        "gentoo" | "Gentoo") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_GENTOO ;;
         "suse") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_OPENSUSE ;;
         "Slackware") OPERATING_SYSTEM_BASED=$OPERATING_SYSTEM_BASEMENT_SLACKWARE ;;
         *) checking_linux_operating_system_using_command_awk_unknown ;;

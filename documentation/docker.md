@@ -67,7 +67,39 @@ Once you are inside the Docker container, copy and past the commands to get the 
     dnf install wget
 
     #Run the fastest mode
-    clear && rm -fr ./build.sh /operating_system_detection/ && wget https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh --no-check-certificate -O build.sh && ls && chmod +x ./build.sh && ./build.sh && ./operating_system_detection/operating_system_detection.sh --print    
+    clear && rm -fr ./build.sh /operating_system_detection/ && wget https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh --no-check-certificate -O build.sh && ls && chmod +x ./build.sh && ./build.sh && ./operating_system_detection/operating_system_detection.sh --print
+    ```
+
+### Gentoo
+
+1. Create and get inside the Slackware container
+    > $ `docker run --name my_gentoo -it gentoo/stage3`
+
+1. Commands
+
+    ```bash
+    #Run the fastest mode
+    clear && rm -fr ./build.sh /operating_system_detection/ && wget https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh --no-check-certificate -O build.sh && ls && chmod +x ./build.sh && ./build.sh && ./operating_system_detection/operating_system_detection.sh --print
+    ```
+
+### Mageia
+
+1. Create and get inside the Slackware container
+    > $ `docker run --name my_mageia -it mageia`
+
+1. Commands
+
+    ```bash
+    #Update the system
+    urpmi.update
+    dnf update
+
+    #Install Wget
+    #urpmi wget
+    dnf install wget
+
+    #Run the fastest mode
+    clear && rm -fr ./build.sh /operating_system_detection/ && wget https://raw.githubusercontent.com/henrikbeck95/operating_system_detection/main/tests/build.sh --no-check-certificate -O build.sh && ls && chmod +x ./build.sh && ./build.sh && ./operating_system_detection/operating_system_detection.sh --print
     ```
 
 ### Slackware

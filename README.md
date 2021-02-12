@@ -184,10 +184,11 @@ Help this project to stay alive improving the source code. Implement possible bu
     - [ ] Android
     - [x] ArchLinux
     - [x] Debian
-    - [ ] Fedora <!--Not tested yet-->
+    - [x] Fedora
     - [ ] FreeBSD <!--Not implemented yet-->
-    - [ ] Gentoo <!--Not implemented yet-->
+    - [x] Gentoo
     - [ ] MacOS X <!--Not tested yet-->
+    - [x] Mandriva
     - [ ] OpenSUSE <!--Not tested yet-->
     - [ ] RedHat <!--Not tested yet-->
     - [x] Slackware
