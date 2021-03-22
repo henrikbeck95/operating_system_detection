@@ -200,3 +200,11 @@ Help this project to stay alive improving the source code. Implement possible bu
     - [ ] Kali Linux <!--Not tested yet-->
     - [ ] OpenSUSE <!--Not tested yet-->
     - [x] Ubuntu
+
+<!--
+## Ideas
+
+- [ ] Identificar a interface gráfica
+- [ ] Identificar a resolução da tela
+- [ ] Identificar se está rodando em WSL ou não
+-->
